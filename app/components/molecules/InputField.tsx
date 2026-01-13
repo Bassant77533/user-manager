@@ -1,6 +1,12 @@
 import React from 'react'
 import Input, { InputElement } from '../atoms/Input'
 
+
+interface SelectOption {
+  label: string
+  value: string
+}
+
 interface InputFieldProps {
     label: string
     type?: string
@@ -11,6 +17,8 @@ interface InputFieldProps {
     error?: string
     disabled?: boolean
     leftIcon?: React.ReactNode
+    as?: 'input' | 'textarea' | 'select'
+    options?: SelectOption[]
 }
 
 const InputField: React.FC<InputFieldProps> = ({
@@ -23,6 +31,8 @@ const InputField: React.FC<InputFieldProps> = ({
     error,
     disabled,
     leftIcon,
+    options,
+    as = 'input',
 }) => {
 return (
 <div className="flex flex-col gap-1.5">
@@ -41,10 +51,12 @@ return (
     )}
 
     <Input
+        as={as}
         type={type}
         value={value}
         placeholder={placeholder}
         onChange={onChange}
+        options={options}
         disabled={disabled}
         className={`
         ${leftIcon ? 'pl-11' : ''}

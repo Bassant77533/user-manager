@@ -12,67 +12,127 @@ import InputField from "./components/molecules/InputField";
 import CheckboxGroup from "./components/molecules/CheckboxGroup";
 import RadioGroup from "./components/molecules/RadioButtonGroup";
 import ProgressBar from "./components/organisms/ProgressBar";
-import SimpleTable from "./components/molecules/Table";
+ import { ColumnDef } from '@tanstack/react-table'
+import { DataTable } from "./components/organisms/Table";
+ import InterestsSelect from "./components/molecules/InterestsSelect";
+import CategorySelect from "./components/molecules/CategorySelect";
+import CountrySelect from "./components/molecules/CountrySelect";
+import TagsSelect from "./components/molecules/TagsSelect";
+import SingleSelect from "./components/molecules/SingleSelect";
+import SuccessModal from "./components/pages/SuccessModal";
+import CountrySelectClient from "./components/molecules/CountrySelect";
+
+type User = {
+  name: string
+  email: string
+}
+
+export const userColumns: ColumnDef<User>[] = [
+  {
+    accessorKey: 'name',
+    header: 'Name',
+  },
+  {
+    accessorKey: 'email',
+    header: 'Email',
+  },
+]
  export default function Home() {
+  const [open, setOpen] = useState(false)
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    country: ''
+  })
+    const [tags, setTags] = useState<string[]>([])
+
   const [interests, setInterests] = useState<string[]>([])
+  const [category, setCategory] =  useState('technology')
+const [country, setCountry] = useState<string>()
+
   const [gender, setGender] = useState('')
-
+const data = [
+  { name: 'Mohamed', email: 'mo@example.com' },
+  { name: 'Nada', email: 'nada@example.com' },
+]
   return (
-
-    <main>
-  <InputField
-  label="Email Address"
-  type="email"
-  placeholder="you@example.com"
-  helperText="We'll never share your email."
-  leftIcon={<Icon name="mail" />}
-/>
-
-<InputField
-  label="Password"
-  type="password"
-  placeholder="••••••••"
-  error="Password must be at least 8 characters."
-  leftIcon ={<Icon name="mail" />}
-/>
-
-
-<CheckboxGroup
-  label="Select your interests"
-  options={[
-    'Technology',
-    'Design',
-    'Business',
-    'Marketing',
-    'Other',
-  ]}
-  values={interests}
-  onChange={setInterests}
-/>
-
-<RadioGroup
-  label="Select your gender"
-  name="gender"
-  options={[
-    { label: 'Male', value: 'male' },
-    { label: 'Female', value: 'female' },
-  ]}
-  value={gender}
-  onChange={setGender}
-/>
-
-<Button variant="secondary" icon="eye">main</Button>
+    <main> 
+ 
+    <InterestsSelect
+      label="Interests"
+      value={interests}
+      onChange={setInterests}
+      max={3}
+      options={[
+        { label: 'Technology', value: 'technology' },
+        { label: 'Design', value: 'design' },
+        { label: 'Business', value: 'business' },
+        { label: 'Marketing', value: 'marketing' },
+        { label: 'Art', value: 'art' },
+      ]}
+    />
+      <CategorySelect
+      label="Category"
+      value={category}
+      onChange={setCategory}
+      options={[
+        { label: 'Technology', value: 'technology' },
+        { label: 'Design', value: 'design' },
+        { label: 'Business', value: 'business' },
+        { label: 'Marketing', value: 'marketing' },
+        { label: 'Education', value: 'education' },
+      ]}
+    />
 
 
- <ProgressBar
-  steps={[
-    { id: 1, title: 'Personal Info' },
-    { id: 2, title: 'Preferences' },
-    { id: 3, title: 'Review' },
-  ]}
-  currentStep={2}
-/>
-<SimpleTable/>
+         <CountrySelect
+          label="Country of Residence"
+          value={formData.country}
+          onChange={(country) => setFormData({...formData, country})}
+          placeholder="Select your country"
+        />
+<TagsSelect
+      label="Tags"
+      value={tags}
+      onChange={setTags}
+      options={[
+        { label: 'Urgent', value: 'urgent' },
+        { label: 'Important', value: 'important' },
+        { label: 'Bug', value: 'bug' },
+        { label: 'Feature', value: 'feature' },
+        { label: 'Enhancement', value: 'enhancement' },
+      ]}
+    />
+
+     <SingleSelect
+      label="Gender *"
+      value={gender}
+      onChange={setGender}
+      options={[
+        { label: 'Male', value: 'male' },
+        { label: 'Female', value: 'female' },
+      ]}
+    />
+
+    const [open, setOpen] = React.useState(false)
+
+<>
+  <Button
+    variant="primary"
+    onClick={() => setOpen(true)}
+  >
+    Add User
+  </Button>
+
+  <SuccessModal
+    open={open}
+    onClose={() => setOpen(false)}
+    onConfirm={() => {
+      setOpen(false)
+    }}
+  />
+</>
+
   </main>
   );
 }
