@@ -11,6 +11,7 @@ import StepCircle from "./components/atoms/StepCircle";
 import InputField from "./components/molecules/InputField";
 import CheckboxGroup from "./components/molecules/CheckboxGroup";
 import RadioGroup from "./components/molecules/RadioButtonGroup";
+import ProgressBar from "./components/organisms/ProgressBar";
  export default function Home() {
   const [interests, setInterests] = useState<string[]>([])
   const [gender, setGender] = useState('')
@@ -60,6 +61,16 @@ import RadioGroup from "./components/molecules/RadioButtonGroup";
 />
 
 <Button variant="secondary" icon="eye">main</Button>
+
+
+ <ProgressBar
+  steps={[
+    { id: 1, title: 'Personal Info' },
+    { id: 2, title: 'Preferences' },
+    { id: 3, title: 'Review' },
+  ]}
+  currentStep={2}
+/>
   </main>
   );
 }

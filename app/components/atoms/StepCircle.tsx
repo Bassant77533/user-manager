@@ -4,7 +4,7 @@ import { Check } from 'lucide-react';
 interface StepCircleProps { 
     content?: number | React.ReactNode;
     isActive ?: boolean; 
-    isCompleted: boolean;
+    isCompleted ?: boolean;
     size?: "small" | "large"; 
     title: string; 
 }
@@ -39,7 +39,7 @@ return (
         content
     )}
     </div>
-    <span className="text-sm font-medium text-slate-600">
+    <span className={`text-sm font-medium ${isActive ? 'text-primary-600' : 'text-slate-600'}`}>
     {title}
     </span>
 </div>
