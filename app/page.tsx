@@ -12,6 +12,7 @@ import InputField from "./components/molecules/InputField";
 import CheckboxGroup from "./components/molecules/CheckboxGroup";
 import RadioGroup from "./components/molecules/RadioButtonGroup";
 import ProgressBar from "./components/organisms/ProgressBar";
+import SimpleTable from "./components/molecules/Table";
  export default function Home() {
   const [interests, setInterests] = useState<string[]>([])
   const [gender, setGender] = useState('')
@@ -71,6 +72,7 @@ import ProgressBar from "./components/organisms/ProgressBar";
   ]}
   currentStep={2}
 />
+<SimpleTable/>
   </main>
   );
 }
