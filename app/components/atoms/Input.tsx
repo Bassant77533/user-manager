@@ -1,78 +1,93 @@
-import React from 'react';
+import React from 'react'
 
-type InputElement =  HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement;
+export type InputElement =
+    | HTMLInputElement
+    | HTMLTextAreaElement
+    | HTMLSelectElement
 
 interface SelectOption {
-    label: string;
-    value: string;
+    label: string
+    value: string
 }
 
 interface InputProps {
-    as?: 'input' | 'textarea' | 'select';
-    placeholder?: string;
-    value?: string;
-    onChange?: (e: React.ChangeEvent<InputElement>) => void;
-    type?: string;
-    className?: string;
+    as?: 'input' | 'textarea' | 'select'
+    placeholder?: string
+    value?: string
+    onChange?: (e: React.ChangeEvent<InputElement>) => void
+    type?: string
+    className?: string
+    disabled?: boolean
+
     /* textarea */
-    rows?: number;
+    rows?: number
+
     /* select */
-    options?: SelectOption[];
+    options?: SelectOption[]
 }
-const baseInputStyles = 'w-full px-4 py-3 border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent';
+
+const baseInputStyles = 'w-full px-4 py-3 border  rounded-lg bg-white text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition'
+
 const Input = ({
     as = 'input',
     placeholder,
     value,
     onChange,
     type = 'text',
-    className,
+    className = '',
     rows = 3,
     options = [],
+    disabled,
 }: InputProps) => {
+const styles = `${baseInputStyles} ${className} ${
+disabled ? 'bg-slate-100 cursor-not-allowed' : ''
+}`
+
+if (as === 'textarea') {
 return (
-<>
-    {as === 'textarea' && (
     <textarea
-        className={baseInputStyles + ' ' + (className || '')}
-        placeholder={placeholder}
-        value={value}
-        onChange={onChange}
-        rows={rows}
+    className={styles}
+    placeholder={placeholder}
+    value={value}
+    onChange={onChange}
+    rows={rows}
+    disabled={disabled}
     />
-    )}
+)
+}
 
-    {as === 'select' && (
+if (as === 'select') {
+return (
     <select
-        className= {baseInputStyles + ' ' + (className || '')}
-        value={value}
-        onChange={onChange}
+    className={styles}
+    value={value}
+    onChange={onChange}
+    disabled={disabled}
     >
-        {placeholder && (
+    {placeholder && (
         <option value="" disabled>
-            {placeholder}
+        {placeholder}
         </option>
-        )}
-
-        {options.map((option) => (
+    )}
+    {options.map(option => (
         <option key={option.value} value={option.value}>
-            {option.label}
+        {option.label}
         </option>
-        ))}
+    ))}
     </select>
-    )}
+)
+}
 
-    {as === 'input' && (
-    <input
-        className={baseInputStyles + ' ' + (className || '')}
-        type={type}
-        placeholder={placeholder}
-        value={value}
-        onChange={onChange}
-    />
-    )}
-</>
-);
-};
+return (
+<input
+    className={styles}
+    type={type}
+    placeholder={placeholder}
+    value={value}
+    onChange={onChange}
+    disabled={disabled}
+/>
+)
+}
 
-export default Input;
+export default Input

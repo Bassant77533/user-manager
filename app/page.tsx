@@ -1,30 +1,65 @@
 
+
+"use client"; 
+import { useState } from "react";
 import Button from "./components/atoms/Button";
 import CheckBox from "./components/atoms/CheckBox";
 import { Icon } from "./components/atoms/Icons/Icon";
 import Input from "./components/atoms/Input";
 import RadioButton from "./components/atoms/RadioButton";
 import StepCircle from "./components/atoms/StepCircle";
+import InputField from "./components/molecules/InputField";
+import CheckboxGroup from "./components/molecules/CheckboxGroup";
+import RadioGroup from "./components/molecules/RadioButtonGroup";
+ export default function Home() {
+  const [interests, setInterests] = useState<string[]>([])
+  const [gender, setGender] = useState('')
 
-export default function Home() {
   return (
-    <main>
-      <div className="flex flex-col gap-4 p-8">
-        <Input placeholder="Email" type="email" />
-      <Input as="textarea" placeholder="Your message" rows={6} />
-      <Input
-        as="select"
-        placeholder="Select an option"
-        options={[
-          { label: "Option 1", value: "option1" },
-          { label: "Option 2", value: "option2" },
-        ]}
-      />
-      </div>
-      <CheckBox label="Accept Terms" />
-      <RadioButton label="Option A" name="options" value="A" />
-      <Button variant="primary">Submit</Button>
 
+    <main>
+  <InputField
+  label="Email Address"
+  type="email"
+  placeholder="you@example.com"
+  helperText="We'll never share your email."
+  leftIcon={<Icon name="mail" />}
+/>
+
+<InputField
+  label="Password"
+  type="password"
+  placeholder="••••••••"
+  error="Password must be at least 8 characters."
+  leftIcon ={<Icon name="mail" />}
+/>
+
+
+<CheckboxGroup
+  label="Select your interests"
+  options={[
+    'Technology',
+    'Design',
+    'Business',
+    'Marketing',
+    'Other',
+  ]}
+  values={interests}
+  onChange={setInterests}
+/>
+
+<RadioGroup
+  label="Select your gender"
+  name="gender"
+  options={[
+    { label: 'Male', value: 'male' },
+    { label: 'Female', value: 'female' },
+  ]}
+  value={gender}
+  onChange={setGender}
+/>
+
+<Button variant="secondary" icon="eye">main</Button>
   </main>
   );
 }
