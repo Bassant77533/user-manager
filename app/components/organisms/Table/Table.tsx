@@ -1,37 +1,31 @@
 'use client'
 
 import {
-  ColumnDef,
-  flexRender,
-  getCoreRowModel,
   useReactTable,
+  getCoreRowModel,
+  flexRender,
 } from '@tanstack/react-table'
+import { users } from './data'
+import { columns } from './columns'
 
-type DataTableProps<TData> = {
-  data: TData[]
-  columns: ColumnDef<TData>[]
-}
-
-export function DataTable<TData>({
-  data,
-  columns,
-}: DataTableProps<TData>) {
+export default function UsersTable() {
   const table = useReactTable({
-    data,
+    data: users,
     columns,
     getCoreRowModel: getCoreRowModel(),
   })
 
   return (
-    <div className="rounded-lg border bg-white">
-      <table className="w-full border-collapse">
-        <thead className="border-b bg-slate-50">
+    <div className="overflow-hidden rounded-xl border border-slate-200 shadow-sm">
+      <table className="min-w-full divide-y divide-slate-200">
+        {/* Header */}
+        <thead className="bg-slate-50">
           {table.getHeaderGroups().map(headerGroup => (
             <tr key={headerGroup.id}>
               {headerGroup.headers.map(header => (
                 <th
                   key={header.id}
-                  className="px-4 py-3 text-left text-xs font-semibold text-slate-600"
+                  className="px-6 py-3 text-left text-xs font-medium text-slate-600 uppercase tracking-wider"
                 >
                   {flexRender(
                     header.column.columnDef.header,
@@ -42,16 +36,18 @@ export function DataTable<TData>({
             </tr>
           ))}
         </thead>
-        <tbody>
+
+        {/* Body */}
+        <tbody className="bg-white divide-y divide-slate-200">
           {table.getRowModel().rows.map(row => (
             <tr
               key={row.id}
-              className="border-b last:border-0 hover:bg-slate-50"
+              className="hover:bg-slate-50 transition-colors"
             >
               {row.getVisibleCells().map(cell => (
                 <td
                   key={cell.id}
-                  className="px-4 py-3 text-sm text-slate-700"
+                  className="px-6 py-4 whitespace-nowrap"
                 >
                   {flexRender(
                     cell.column.columnDef.cell,
