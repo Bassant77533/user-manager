@@ -11,6 +11,7 @@ interface ButtonProps {
     variant?: 'primary' | 'secondary' | 'ghost' | 'accent'
     icon?: IconName
     type?: 'button' | 'submit' | 'reset' 
+    iconPosition?: 'left' | 'right'
 }
 
 const Button = ({
@@ -20,7 +21,8 @@ const Button = ({
     variant = 'primary',
     disabled,
     icon,
-    type = 'button', 
+    type = 'button',
+    iconPosition =  'left'
 }: Readonly<ButtonProps>) => {
 const btnType =
     variant === 'primary'
@@ -42,10 +44,10 @@ return (
     disabled && 'opacity-50 cursor-not-allowed pointer-events-none',
     className
     )}
->
-    {icon && <Icon name={icon} />}
+>  
+    {icon && iconPosition === 'left' && <Icon name={icon} />}
     {children}
-
+    {icon && iconPosition === 'right' && <Icon name={icon} />}
 </button>
 )
 }

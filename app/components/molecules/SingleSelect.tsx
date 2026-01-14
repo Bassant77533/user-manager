@@ -1,6 +1,7 @@
 'use client'
 
 import React from 'react'
+import { Icon } from '../atoms/Icons/Icon'
 
 interface Option {
   label: string
@@ -50,7 +51,7 @@ const CustomSingleSelect: React.FC<CustomSingleSelectProps> = ({
           ${disabled ? 'cursor-not-allowed opacity-50' : 'cursor-pointer'}
           ${
             hasError
-              ? 'border-red-500 ring-2 ring-red-500/20'
+              ? 'border-red-500 ring-2 ring-red-500'
               : open
               ? 'border-green-500 ring-2 ring-green-500/20'
               : 'border-slate-300'
@@ -82,12 +83,12 @@ const CustomSingleSelect: React.FC<CustomSingleSelectProps> = ({
                   ${
                     selected
                       ? 'bg-primary-50 text-primary-500'
-                      : 'hover:bg-slate-300'
+                      : 'hover:bg-slate-100'
                   }
                 `}
               >
                 <span>{option.label}</span>
-                {selected && <span className="text-primary-500">✓</span>}
+                {selected && <span className="text-primary-500"><Icon name='check'/></span>}
               </div>
             )
           })}

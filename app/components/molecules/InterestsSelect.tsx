@@ -11,6 +11,7 @@ interface InterestsSelectProps {
   value: string[]
   onChange: (values: string[]) => void
   max?: number
+  error ?: string 
 }
 
 const InterestsSelect: React.FC<InterestsSelectProps> = ({
@@ -19,6 +20,7 @@ const InterestsSelect: React.FC<InterestsSelectProps> = ({
   value,
   onChange,
   max = 3,
+  error
 }) => {
   const [open, setOpen] = React.useState(false)
 
@@ -47,6 +49,7 @@ const InterestsSelect: React.FC<InterestsSelectProps> = ({
         className={`
           flex min-h-12 flex-wrap items-center gap-2
           rounded-lg border px-3 py-2 cursor-pointer
+          ${error ? ' ring-2 ring-red-500 border-transparent' : ''}
           ${open ? 'border-primary-500 ring-2 ring-primary-500/20' : 'border-slate-300'}
         `}
         onClick={() => setOpen(!open)}

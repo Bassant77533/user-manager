@@ -13,7 +13,7 @@ const sizeMap: Record<IconSize, number> = {
   xs: 12,
   sm: 16,
   md: 20,
-  lg: 24,
+  lg: 30,
 };
 
 export const Icon: React.FC<IconProps> = ({

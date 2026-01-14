@@ -1,8 +1,6 @@
-'use client'
-
-import React from 'react'
 import Button from '../atoms/Button'
 import { Icon } from '../atoms/Icons/Icon'
+
 
 interface SuccessModalProps {
     open: boolean
@@ -20,6 +18,8 @@ onClose,
 onConfirm,
 }) => {
 if (!open) return null
+
+
 
 return (
 <div className="fixed inset-0 z-50 flex items-center justify-center">

@@ -17,7 +17,7 @@ const PersonalInfoStep = () => {
     control,
     formState: { errors },
   } = useFormContext<UserFormValues>()
- 
+
   return (
     <div className="space-y-4">
       <h2 className="text-lg font-semibold">Personal Information</h2>
@@ -56,7 +56,7 @@ const PersonalInfoStep = () => {
         control={control}
         render={({ field }) => (
           <CountrySelect
-            label="Country"
+            label="Country (optional)"
             value={field.value}
             onChange={field.onChange}
             placeholder="Select your country"
