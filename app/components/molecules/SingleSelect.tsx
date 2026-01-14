@@ -13,6 +13,9 @@ interface CustomSingleSelectProps {
   onChange: (value: string) => void
   options: Option[]
   placeholder?: string
+  required?: boolean
+  disabled?: boolean
+  error ?: string 
 }
 
 const CustomSingleSelect: React.FC<CustomSingleSelectProps> = ({
@@ -21,28 +24,37 @@ const CustomSingleSelect: React.FC<CustomSingleSelectProps> = ({
   onChange,
   options,
   placeholder = 'Select option',
+  required = false,
+  error ,
+  disabled = false,
 }) => {
   const [open, setOpen] = React.useState(false)
 
   const selectedOption = options.find(o => o.value === value)
+  const hasError = required && !value && error 
 
   return (
     <div className="relative flex flex-col gap-1.5">
       {/* Label */}
       <label className="body-sm text-slate-700">
         {label}
+        {required && <span className="ml-1 text-red-500">*</span>}
       </label>
 
       {/* Trigger */}
       <div
-        onClick={() => setOpen(prev => !prev)}
+        onClick={() => !disabled && setOpen(prev => !prev)}
         className={`
           flex items-center justify-between
-          min-h-[48px] px-4 cursor-pointer
-          rounded-lg border bg-white
-          ${open
-            ? 'border-green-500 ring-2 ring-green-500/20'
-            : 'border-slate-300'}
+          min-h-[48px] px-4 rounded-lg border bg-white
+          ${disabled ? 'cursor-not-allowed opacity-50' : 'cursor-pointer'}
+          ${
+            hasError
+              ? 'border-red-500 ring-2 ring-red-500/20'
+              : open
+              ? 'border-green-500 ring-2 ring-green-500/20'
+              : 'border-slate-300'
+          }
         `}
       >
         <span className={selectedOption ? 'text-slate-900' : 'text-slate-400'}>
@@ -53,7 +65,7 @@ const CustomSingleSelect: React.FC<CustomSingleSelectProps> = ({
       </div>
 
       {/* Dropdown */}
-      {open && (
+      {open && !disabled && (
         <div className="absolute top-full z-10 mt-1 w-full rounded-lg border bg-white shadow">
           {options.map(option => {
             const selected = option.value === value
@@ -67,13 +79,15 @@ const CustomSingleSelect: React.FC<CustomSingleSelectProps> = ({
                 }}
                 className={`
                   flex items-center justify-between px-4 py-2 cursor-pointer
-                  ${selected
-                    ? 'bg-green-50 text-green-700'
-                    : 'hover:bg-slate-50'}
+                  ${
+                    selected
+                      ? 'bg-primary-50 text-primary-500'
+                      : 'hover:bg-slate-300'
+                  }
                 `}
               >
                 <span>{option.label}</span>
-                {selected && <span className="text-green-600">✓</span>}
+                {selected && <span className="text-primary-500">✓</span>}
               </div>
             )
           })}

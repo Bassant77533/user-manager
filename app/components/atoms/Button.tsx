@@ -10,6 +10,7 @@ interface ButtonProps {
     disabled?: boolean
     variant?: 'primary' | 'secondary' | 'ghost' | 'accent'
     icon?: IconName
+    type?: 'button' | 'submit' | 'reset' 
 }
 
 const Button = ({
@@ -19,6 +20,7 @@ const Button = ({
     variant = 'primary',
     disabled,
     icon,
+    type = 'button', 
 }: Readonly<ButtonProps>) => {
 const btnType =
     variant === 'primary'
@@ -31,6 +33,7 @@ const btnType =
 
 return (
 <button
+    type={type}
     onClick={onClick}
     disabled={disabled}
     className={clsx(

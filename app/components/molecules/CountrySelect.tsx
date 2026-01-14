@@ -90,7 +90,7 @@ export default function CountrySelect({
       <button
         type="button"
         onClick={() => setOpen(v => !v)}
-        className="w-full flex items-center justify-between px-4 py-3 border border-slate-300 rounded-lg bg-white focus:ring-2 focus:ring-blue-500 transition-all"
+        className="w-full flex items-center justify-between px-4 py-3 border border-slate-300 rounded-lg bg-white focus:ring-2 focus:ring-primary-500 transition-all"
       >
         <span className={selected ? 'text-slate-900' : 'text-slate-400'}>
           {selected?.name || placeholder}
@@ -108,7 +108,7 @@ export default function CountrySelect({
                 value={search}
                 onChange={e => setSearch(e.target.value)}
                 placeholder="Search countries..."
-                className="w-full pl-9 pr-3 py-2 text-sm border border-slate-200 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full pl-9 pr-3 py-2 text-sm border border-slate-200 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500"
               />
             </div>
           </div>
@@ -129,11 +129,11 @@ export default function CountrySelect({
                 className={`
                   flex items-center justify-between px-4 py-2.5 cursor-pointer text-sm
                   hover:bg-blue-50 transition-colors
-                  ${value === c.code ? 'bg-blue-50 text-blue-700 font-medium' : 'text-slate-700'}
+                  ${value === c.code ? 'bg-blue-50 text-primary-700 font-medium' : 'text-slate-700'}
                 `}
               >
                 {c.name}
-                {value === c.code && <Check className="w-4 h-4 text-blue-600" />}
+                {value === c.code && <Check className="w-4 h-4 text-primary-600" />}
               </li>
             ))}
 
