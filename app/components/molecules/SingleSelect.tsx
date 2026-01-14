@@ -16,7 +16,7 @@ interface CustomSingleSelectProps {
   placeholder?: string
   required?: boolean
   disabled?: boolean
-  error ?: string 
+  error?: string
 }
 
 const CustomSingleSelect: React.FC<CustomSingleSelectProps> = ({
@@ -26,18 +26,22 @@ const CustomSingleSelect: React.FC<CustomSingleSelectProps> = ({
   options,
   placeholder = 'Select option',
   required = false,
-  error ,
+  error,
   disabled = false,
 }) => {
   const [open, setOpen] = React.useState(false)
 
   const selectedOption = options.find(o => o.value === value)
-  const hasError = required && !value && error 
+  const hasError = Boolean(error && required && !value)
 
   return (
-    <div className="relative flex flex-col gap-1.5">
+    <div className="relative flex flex-col">
       {/* Label */}
-      <label className="body-sm text-slate-700">
+      <label
+        className={`body-sm mb-1.5 ${
+          hasError ? 'text-red-500' : 'text-slate-700'
+        }`}
+      >
         {label}
         {required && <span className="ml-1 text-red-500">*</span>}
       </label>
@@ -51,7 +55,7 @@ const CustomSingleSelect: React.FC<CustomSingleSelectProps> = ({
           ${disabled ? 'cursor-not-allowed opacity-50' : 'cursor-pointer'}
           ${
             hasError
-              ? 'border-red-500 ring-2 ring-red-500'
+              ? 'border-red-500 ring-2 ring-red-500/20'
               : open
               ? 'border-green-500 ring-2 ring-green-500/20'
               : 'border-slate-300'
@@ -61,7 +65,6 @@ const CustomSingleSelect: React.FC<CustomSingleSelectProps> = ({
         <span className={selectedOption ? 'text-slate-900' : 'text-slate-400'}>
           {selectedOption ? selectedOption.label : placeholder}
         </span>
-
         <span className="text-slate-400">▾</span>
       </div>
 
@@ -70,7 +73,6 @@ const CustomSingleSelect: React.FC<CustomSingleSelectProps> = ({
         <div className="absolute top-full z-10 mt-1 w-full rounded-lg border bg-white shadow">
           {options.map(option => {
             const selected = option.value === value
-
             return (
               <div
                 key={option.value}
@@ -80,19 +82,24 @@ const CustomSingleSelect: React.FC<CustomSingleSelectProps> = ({
                 }}
                 className={`
                   flex items-center justify-between px-4 py-2 cursor-pointer
-                  ${
-                    selected
-                      ? 'bg-primary-50 text-primary-500'
-                      : 'hover:bg-slate-100'
-                  }
+                  ${selected ? 'bg-primary-50 text-primary-500' : 'hover:bg-slate-100'}
                 `}
               >
                 <span>{option.label}</span>
-                {selected && <span className="text-primary-500"><Icon name='check'/></span>}
+                {selected && (
+                  <span className="text-primary-500">
+                    <Icon name="check" />
+                  </span>
+                )}
               </div>
             )
           })}
         </div>
+      )}
+
+      {/* Error (hidden when dropdown is open → no gap) */}
+      {!open && hasError && (
+        <p className="mt-1 text-xs text-red-500">{error}</p>
       )}
     </div>
   )

@@ -1,3 +1,5 @@
+'use client'
+
 import React from 'react'
 
 interface Option {
@@ -11,7 +13,7 @@ interface InterestsSelectProps {
   value: string[]
   onChange: (values: string[]) => void
   max?: number
-  error ?: string 
+  error?: string
 }
 
 const InterestsSelect: React.FC<InterestsSelectProps> = ({
@@ -20,9 +22,11 @@ const InterestsSelect: React.FC<InterestsSelectProps> = ({
   value,
   onChange,
   max = 3,
-  error
+  error,
 }) => {
   const [open, setOpen] = React.useState(false)
+
+  const hasError = Boolean(error && value.length === 0)
 
   const toggleOption = (val: string) => {
     if (value.includes(val)) {
@@ -38,21 +42,30 @@ const InterestsSelect: React.FC<InterestsSelectProps> = ({
   }
 
   return (
-    <div className="relative flex flex-col gap-1.5">
+    <div className="relative flex flex-col">
       {/* Label */}
-      <label className="body-sm text-slate-700">
+      <label
+        className={`body-sm mb-1.5 ${
+          hasError ? 'text-red-500' : 'text-slate-700'
+        }`}
+      >
         {label} <span className="text-red-500">*</span>
       </label>
 
       {/* Input-like box */}
       <div
+        onClick={() => setOpen(prev => !prev)}
         className={`
           flex min-h-12 flex-wrap items-center gap-2
           rounded-lg border px-3 py-2 cursor-pointer
-          ${error ? ' ring-2 ring-red-500 border-transparent' : ''}
-          ${open ? 'border-primary-500 ring-2 ring-primary-500/20' : 'border-slate-300'}
+          ${
+            hasError
+              ? 'border-red-500 ring-2 ring-red-500/20'
+              : open
+              ? 'border-primary-500 ring-2 ring-primary-500/20'
+              : 'border-slate-300'
+          }
         `}
-        onClick={() => setOpen(!open)}
       >
         {value.length === 0 && (
           <span className="text-slate-400 text-sm">
@@ -87,14 +100,12 @@ const InterestsSelect: React.FC<InterestsSelectProps> = ({
       {/* Dropdown */}
       {open && (
         <div className="absolute top-full z-10 mt-1 w-full rounded-lg border bg-white shadow">
-          {/* Max message */}
           {value.length >= max && (
             <div className="bg-orange-50 px-4 py-2 text-sm text-orange-600">
               Maximum {max} options selected
             </div>
           )}
 
-          {/* Options */}
           <div className="max-h-56 overflow-auto">
             {options.map(option => {
               const checked = value.includes(option.value)
@@ -104,9 +115,9 @@ const InterestsSelect: React.FC<InterestsSelectProps> = ({
                 <label
                   key={option.value}
                   className={`
-                    flex items-center gap-3 px-4 py-2 cursor-pointer
+                    flex items-center gap-3 px-4 py-2
                     ${checked ? 'bg-green-50' : ''}
-                    ${disabled ? 'opacity-50 cursor-not-allowed' : 'hover:bg-slate-50'}
+                    ${disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer hover:bg-slate-50'}
                   `}
                 >
                   <input
@@ -122,6 +133,11 @@ const InterestsSelect: React.FC<InterestsSelectProps> = ({
             })}
           </div>
         </div>
+      )}
+
+      {/* Error message (hidden when open – no gap) */}
+      {!open && hasError && (
+        <p className="mt-1 text-xs text-red-500">{error}</p>
       )}
     </div>
   )
