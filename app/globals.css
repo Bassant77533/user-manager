@@ -57,19 +57,6 @@
   --color-slate-800: #1e293b;
   --color-slate-900: #0f172a;
 
-  /* =======================
-     Spacing Scale (8px base)
-  ======================= */
-  --spacing-1: 4px;
-  --spacing-2: 8px;
-  --spacing-3: 12px;
-  --spacing-4: 16px;
-  --spacing-5: 20px;
-  --spacing-6: 24px;
-  --spacing-8: 32px;
-  --spacing-10: 40px;
-  --spacing-12: 48px;
-  --spacing-16: 64px;
 }
 
 /* =======================
